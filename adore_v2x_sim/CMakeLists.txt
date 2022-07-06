@@ -12,35 +12,38 @@
 # *  Daniel Heß
 # ********************************************************************************
 cmake_minimum_required(VERSION 2.8.3)
-project(v2xsim)
+project(adore_v2x_sim)
 
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/v2x_if_ros_msg/build/install")
+add_library(${PROJECT_NAME} PUBLIC)
+add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
-## Find catkin macros and libraries
-## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
-## is used, also find other catkin packages
+set(PACKAGE_VENDOR "DLR TS-KOS-SAI")
+set(PACKAGE_DESCRIPTION ${PROJECT_NAME})
+set(PACKAGE_MAINTAINER "DLR TS-KOS-SAI")
+set(PACKAGE_MAINTAINER_EMAIL "ts-kos-sai@dlr.de")
+
+
+set(CMAKE_PREFIX_PATH "$ENV{CMAKE_PREFIX_PATH};/tmp/v2x_if_ros_msg/build/devel")
 find_package(catkin REQUIRED COMPONENTS
-    roscpp
-    message_generation
-    nav_msgs
-    #strp_fau
-#    its_container_v1_its_container
-#    its_container_v2_its_container
-#    cam_v2_cam_pdu_descriptions
-#    cpm_v1_19_cpm_pdu_descriptions
-#    cpm_v1_19_cpm_commondatatypes_descriptions
-#    cpm_v1_19_cpm_originatingstationdata_descriptions
-#    cpm_v1_19_cpm_sensorinformation_descriptions
-#    cpm_v1_19_cpm_perceivedobject_descriptions
-#    cpm_v1_19_cpm_freespaceaddendum_descriptions
-#    dsrc_v2_mapem_pdu_descriptions
-#    dsrc_v2_spatem_pdu_descriptions
-#    dsrc_v2_srem_pdu_descriptions
-#    denm_v2_denm_pdu_descriptions
-#    mcm_transaid_mcm_transaid
-#    mcm_dmove_mcm_dmove
-     v2x_if_ros_msg
-  )
+	message_generation
+	nav_msgs
+	roscpp
+	cam_v2_cam_pdu_descriptions
+	cpm_v1_19_cpm_pdu_descriptions
+	denm_v2_denm_pdu_descriptions
+	dsrc_v2_mapem_pdu_descriptions
+	dsrc_v2_spatem_pdu_descriptions
+	dsrc_v2_srem_pdu_descriptions
+	dsrc_v2_ssem_pdu_descriptions
+	mcm_dmove_mcm_dmove
+	mcm_transaid_mcm_transaid
+	its_container_v2_its_container
+	cpm_v1_19_cpm_freespaceaddendum_descriptions
+	cpm_v1_19_cpm_sensorinformation_descriptions
+	cpm_v1_19_cpm_originatingstationdata_descriptions
+	cpm_v1_19_cpm_perceivedobject_descriptions
+)
+
 
 
 ################################################
@@ -77,26 +80,6 @@ generate_messages(
   )
 
 
-################################################
-## Declare ROS dynamic reconfigure parameters ##
-################################################
-
-## To declare and build dynamic reconfigure parameters within this
-## package, follow these steps:
-## * In the file package.xml:
-##   * add a build_depend and a exec_depend tag for "dynamic_reconfigure"
-## * In this file (CMakeLists.txt):
-##   * add "dynamic_reconfigure" to
-##     find_package(catkin REQUIRED COMPONENTS ...)
-##   * uncomment the "generate_dynamic_reconfigure_options" section below
-##     and list every .cfg file to be processed
-
-## Generate dynamic reconfigure parameters in the 'cfg' folder
-# generate_dynamic_reconfigure_options(
-#   cfg/DynReconf1.cfg
-#   cfg/DynReconf2.cfg
-# )
-
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -108,7 +91,7 @@ generate_messages(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-#  LIBRARIES v2xsim
+  LIBRARIES adore_v2x_sim
   CATKIN_DEPENDS roscpp std_msgs message_runtime geometry_msgs nav_msgs
   CATKIN_DEPENDS adore_if_ros_msg
 #  CATKIN_DEPENDS strp_fau
@@ -132,17 +115,10 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
 
-#   src/${PROJECT_NAME}/v2xsim.cpp
-#   src/${PROJECT_NAME}/itsg5_common.cpp
   include
   ${catkin_INCLUDE_DIRS}
 )
 
-
-## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/v2xsim.cpp
-# )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -152,7 +128,6 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/v2xsim_node.cpp)
 add_executable(channel_sim_node src/channel_sim_node.cpp)
 add_dependencies(channel_sim_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(channel_sim_node  ${catkin_LIBRARIES} )
@@ -243,3 +218,38 @@ install(DIRECTORY include/${PROJECT_NAME}/
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+
+
+
+## Mark cpp header files for installation
+install(TARGETS ${PROJECT_NAME}
+        EXPORT ${PROJECT_NAME}_Targets
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+
+include(CMakePackageConfigHelpers)
+
+configure_package_config_file(
+  "${PROJECT_SOURCE_DIR}/cmake/LibraryConfig.cmake.in"
+  "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+  INSTALL_DESTINATION
+  ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
+
+install(EXPORT ${PROJECT_NAME}_Targets
+        COMPONENT ${PROJECT_NAME}
+        FILE ${PROJECT_NAME}Targets.cmake
+        NAMESPACE ${PROJECT_NAME}::
+        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
+)
+
+install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+              # "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
+        COMPONENT ${PROJECT_NAME}
+)
+
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/build/devel/include DESTINATION .) 
+

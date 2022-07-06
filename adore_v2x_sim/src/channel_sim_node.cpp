@@ -17,25 +17,24 @@
 // to/from a single station.
 
 #include <ros/ros.h>
-#include <v2xsim/SimSPATEM.h>
-#include <v2xsim/SimMAPEM.h>
-#include <v2xsim/SimMCM.h>
-#include <v2xsim/SimDENM.h>
-#include <v2xsim/SimSREM.h>
+#include <adore_v2x_sim/SimSPATEM.h>
+#include <adore_v2x_sim/SimMAPEM.h>
+#include <adore_v2x_sim/SimMCM.h>
+#include <adore_v2x_sim/SimDENM.h>
+#include <adore_v2x_sim/SimSREM.h>
 
 
-#include "channel2station.h"
-// #include <boost/random.hpp>
+#include <adore_v2x_sim/channel2station.h>
 
 
 int main(int argc,char **argv)
 {
     ros::init(argc,argv,"channel_sim_node");
     ros::NodeHandle n;
-    v2xsim::Station station(n,"odom");
-    v2xsim::Channel channel(n,&station,0);
-    v2xsim::ChannelToStation<v2xsim::SimSPATEM,
-                                 v2xsim::SimSPATEMConstPtr,
+    adore_v2x_sim::Station station(n,"odom");
+    adore_v2x_sim::Channel channel(n,&station,0);
+    adore_v2x_sim::ChannelToStation<adore_v2x_sim::SimSPATEM,
+                                 adore_v2x_sim::SimSPATEMConstPtr,
                                  dsrc_v2_spatem_pdu_descriptions::SPATEM,
                                  dsrc_v2_spatem_pdu_descriptions::SPATEMConstPtr>
                                 channelToStation_spatem(n,
@@ -46,8 +45,8 @@ int main(int argc,char **argv)
                                     &station,
                                     &channel
                                     );
-    v2xsim::ChannelToStation<v2xsim::SimMAPEM,
-                                 v2xsim::SimMAPEMConstPtr,
+    adore_v2x_sim::ChannelToStation<adore_v2x_sim::SimMAPEM,
+                                 adore_v2x_sim::SimMAPEMConstPtr,
                                  dsrc_v2_mapem_pdu_descriptions::MAPEM,
                                  dsrc_v2_mapem_pdu_descriptions::MAPEMConstPtr>
                                 channelToStation_mapem(n,
@@ -58,8 +57,8 @@ int main(int argc,char **argv)
                                     &station,
                                     &channel
                                     );
-    v2xsim::ChannelToStation<v2xsim::SimMCM,
-                                     v2xsim:: SimMCMConstPtr,
+    adore_v2x_sim::ChannelToStation<adore_v2x_sim::SimMCM,
+                                     adore_v2x_sim:: SimMCMConstPtr,
                                     mcm_dmove_mcm_dmove::MCM,
                                     mcm_dmove_mcm_dmove::MCMConstPtr>
                                     channelToStation_mcm(n,
@@ -70,8 +69,8 @@ int main(int argc,char **argv)
                                     &station,
                                     &channel
                                     );
-    v2xsim::ChannelToStation<   v2xsim::SimDENM,
-                                v2xsim::SimDENMConstPtr,
+    adore_v2x_sim::ChannelToStation<   adore_v2x_sim::SimDENM,
+                                adore_v2x_sim::SimDENMConstPtr,
                                 denm_v2_denm_pdu_descriptions::DENM,
                                 denm_v2_denm_pdu_descriptions::DENMConstPtr  >
                                 channelToStation_denm(n,
@@ -82,8 +81,8 @@ int main(int argc,char **argv)
                                 &station,
                                 &channel
                                 );
-    v2xsim::ChannelToStation<   v2xsim::SimSREM,
-                                v2xsim::SimSREMConstPtr,
+    adore_v2x_sim::ChannelToStation<   adore_v2x_sim::SimSREM,
+                                adore_v2x_sim::SimSREMConstPtr,
                                 dsrc_v2_srem_pdu_descriptions::SREM,
                                 dsrc_v2_srem_pdu_descriptions::SREMConstPtr  >
                                 channelToStation_srem(n,

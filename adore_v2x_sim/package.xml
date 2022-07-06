@@ -15,8 +15,8 @@
 ********************************************************************************
 -->
 <package format="2">
-  <name>v2xsim</name>
-  <version>0.2.0</version>
+  <name>adore_v2x_sim</name>
+  <version>0.3.0</version>
   <description>A package for simulation of v2x messages.</description>
   <maintainer email="adore-dev@eclipse.org">Daniel Hess</maintainer>
   <license>EPL-2.0</license>
@@ -44,14 +44,6 @@
   <depend>mcm_transaid_mcm_transaid</depend>
   <depend>mcm_dmove_mcm_dmove</depend>  
   <exec_depend>adore_if_ros_msg</exec_depend>
-
-  <!-- <build_depend>strp_fau</build_depend> -->
-  <!-- <exec_depend>strp_fau</exec_depend> -->
- 
-
-  <!-- The export tag contains other, unspecified, tags -->
   <export>
-    <!-- Other tools can request additional information be placed here -->
-
   </export>
 </package>

@@ -20,7 +20,7 @@
 #include <string>
 #include "channel.h"
 
-namespace v2xsim
+namespace adore_v2x_sim
 {
     /**
      * ChannelToStation class handles message hand-over between simulated channel and station v2x topic

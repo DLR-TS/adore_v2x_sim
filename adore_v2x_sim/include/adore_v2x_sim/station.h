@@ -20,7 +20,7 @@
 #include <nav_msgs/Odometry.h>
 #include <string>
 
-namespace v2xsim
+namespace adore_v2x_sim
 {
     /**
      * Station tracks position and time of a v2x sender/receiver.

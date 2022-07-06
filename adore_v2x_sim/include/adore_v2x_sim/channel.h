@@ -19,13 +19,13 @@
 #include <string>
 #include <list>
 #include <algorithm>
-#include "station.h"
-#include <v2xsim/V2XMetaSim.h>
+#include <adore_v2x_sim/station.h>
+#include <adore_v2x_sim/V2XMetaSim.h>
 #include <limits>
 #include <random>
 // #include <boost/random.hpp>
 
-namespace v2xsim
+namespace adore_v2x_sim
 {
     /**
      * Channel class models probabilistic message transfer for v2x.
@@ -53,7 +53,7 @@ namespace v2xsim
         double rx_sensivity; 
         double fading_std;
         
-        void update_event_list(const v2xsim::V2XMetaSim& meta)
+        void update_event_list(const V2XMetaSim& meta)
         {
             //erase old events
             double now = station_->getT();
@@ -105,7 +105,7 @@ namespace v2xsim
             generator.seed(seed);
         }
 
-        void notify(const v2xsim::V2XMetaSim& meta,bool& received,double& delay)
+        void notify(const V2XMetaSim& meta,bool& received,double& delay)
         {
             const double dx = meta.location.x-station_->getX();
             const double dy = meta.location.y-station_->getY();
