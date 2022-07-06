@@ -24,7 +24,7 @@ RUN cmake --install . --prefix /tmp/${PROJECT}/build/install
 
 
 COPY ${PROJECT} /tmp/${PROJECT}
-copy files/catkin_build.sh /tmp/${PROJECT}
+#copy files/catkin_build.sh /tmp/${PROJECT}
 
 WORKDIR /tmp/${PROJECT}
 RUN mkdir -p build 
