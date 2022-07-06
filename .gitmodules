@@ -1,0 +1,3 @@
+[submodule "v2x_if_ros_msg"]
+	path = v2x_if_ros_msg
+	url = git@github.com:DLR-TS/v2x_if_ros_msg
