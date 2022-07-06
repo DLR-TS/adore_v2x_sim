@@ -14,6 +14,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(v2xsim)
 
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/v2x_if_ros_msg/build/install")
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
