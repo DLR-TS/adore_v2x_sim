@@ -22,21 +22,22 @@ find_package(catkin REQUIRED COMPONENTS
     message_generation
     nav_msgs
     #strp_fau
-    its_container_v1_its_container
-    its_container_v2_its_container
-    cam_v2_cam_pdu_descriptions
-    cpm_v1_19_cpm_pdu_descriptions
-    cpm_v1_19_cpm_commondatatypes_descriptions
-    cpm_v1_19_cpm_originatingstationdata_descriptions
-    cpm_v1_19_cpm_sensorinformation_descriptions
-    cpm_v1_19_cpm_perceivedobject_descriptions
-    cpm_v1_19_cpm_freespaceaddendum_descriptions
-    dsrc_v2_mapem_pdu_descriptions
-    dsrc_v2_spatem_pdu_descriptions
-    dsrc_v2_srem_pdu_descriptions
-    denm_v2_denm_pdu_descriptions
-    mcm_transaid_mcm_transaid
-    mcm_dmove_mcm_dmove
+#    its_container_v1_its_container
+#    its_container_v2_its_container
+#    cam_v2_cam_pdu_descriptions
+#    cpm_v1_19_cpm_pdu_descriptions
+#    cpm_v1_19_cpm_commondatatypes_descriptions
+#    cpm_v1_19_cpm_originatingstationdata_descriptions
+#    cpm_v1_19_cpm_sensorinformation_descriptions
+#    cpm_v1_19_cpm_perceivedobject_descriptions
+#    cpm_v1_19_cpm_freespaceaddendum_descriptions
+#    dsrc_v2_mapem_pdu_descriptions
+#    dsrc_v2_spatem_pdu_descriptions
+#    dsrc_v2_srem_pdu_descriptions
+#    denm_v2_denm_pdu_descriptions
+#    mcm_transaid_mcm_transaid
+#    mcm_dmove_mcm_dmove
+     v2x_if_ros_msg
   )
 
 

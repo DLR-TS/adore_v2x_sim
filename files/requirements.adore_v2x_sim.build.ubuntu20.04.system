@@ -3,3 +3,5 @@ cmake
 gcc
 g++
 python3-catkin-tools
+ros-noetic-roscpp-core
+
