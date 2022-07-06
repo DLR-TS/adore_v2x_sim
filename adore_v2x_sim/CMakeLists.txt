@@ -14,7 +14,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(adore_v2x_sim)
 
-add_library(${PROJECT_NAME} PUBLIC)
+add_library(${PROJECT_NAME} INTERFACE)
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 set(PACKAGE_VENDOR "DLR TS-KOS-SAI")
@@ -22,6 +22,9 @@ set(PACKAGE_DESCRIPTION ${PROJECT_NAME})
 set(PACKAGE_MAINTAINER "DLR TS-KOS-SAI")
 set(PACKAGE_MAINTAINER_EMAIL "ts-kos-sai@dlr.de")
 
+include(GNUInstallDirs)
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(Packing)
 
 set(CMAKE_PREFIX_PATH "$ENV{CMAKE_PREFIX_PATH};/tmp/v2x_if_ros_msg/build/devel")
 find_package(catkin REQUIRED COMPONENTS
