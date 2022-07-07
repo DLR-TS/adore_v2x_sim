@@ -1,5 +1,6 @@
+
 <!--
-*******************************************************************************
+********************************************************************************
 * Copyright (C) 2017-2020 German Aerospace Center (DLR). 
 * Eclipse ADORe, Automated Driving Open Research https://eclipse.org/adore
 *
@@ -10,17 +11,18 @@
 * SPDX-License-Identifier: EPL-2.0 
 *
 * Contributors: 
-*  Daniel Heß
+*   Daniel Heß 
 ********************************************************************************
 -->
-### v2xsim is a ROS simulation package for ITSG5 radio messages 
-For each simulated ITSG5 message X, a "SimX.msg" file is provided in msg folder.
-A SimX message transports the original ROS version of the ITSG5 message and a meta information header of type "V2XMetaSIM",
-which contains send power, send location, send time and the size of the message on the physical channgel as bytecount.
-A node "channel_sim_node" is provided by this package: The node relays messages between the simulation channel "/SIM/v2x/X", (where "X" stands for message type) and the reception and send channels of a station, "v2x/incoming/X" and "v2x/outgoing/X".
-```
-/SIM/v2x/X: SimX.msg  -->  v2x/incoming/X: X.msg
-/SIM/v2x/X: SimX.msg  <--  v2x/outgoing/X: X.msg
-```
-The channel_sim_node further receives its station's position information of type "nav_msgs/Odometry.msg" on topic "odom" in order to compare a messages send location and the station's location on reception of a message.
+# A basic simulation package for ITS-G5 V2X radio messages
+ADORe is an open source toolkit for automated vehicle control and decision making, with the main repository [eclipse/adore](https://github.com/eclipse/adore).
+ADORe can be coupled with ROS. 
+This module contains a basic model for simulation of v2x radio traffic exchanged between automated vehicles.
+Messages from [v2x_if_ros_msg](https://github.com/dlr-ts/v2x_if_ros_msg) "V2X ROS messages" are exchanged between virtual stations.
 
+## Structure
+On this level the repository is a docker and make wrapper for the actual content in the module subfolder.
+
+## Setup
+This repository may be used on a system, which fulfills a set of requirements [adore_setup](https://github.com/dlr-ts/adore_setup).
+After checkout, enter make in the top level of the repository in order to build.
