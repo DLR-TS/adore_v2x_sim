@@ -100,9 +100,5 @@ add_executable(channel_sim_node src/channel_sim_node.cpp)
 add_dependencies(channel_sim_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(channel_sim_node  ${catkin_LIBRARIES} )
 
-install(TARGETS channel_sim_node
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
 include(PackagingInstallTargets)
 
