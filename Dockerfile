@@ -47,8 +47,8 @@ RUN source /opt/ros/noetic/setup.bash && \
 #    cpack -G DEB && find . -type f -name "*.deb" | xargs mv -t . 
 #RUN bash catkin_build.sh
 
-#FROM alpine:3.14
+FROM alpine:3.14
 
-#ARG PROJECT
-#COPY --from=adore_v2x_sim_builder /tmp/${PROJECT}/build /tmp/${PROJECT}/build
+ARG PROJECT
+COPY --from=adore_v2x_sim_builder /tmp/${PROJECT}/build /tmp/${PROJECT}/build
 
