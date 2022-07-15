@@ -31,21 +31,21 @@ find_package(catkin REQUIRED COMPONENTS
 	message_generation
 	nav_msgs
 	roscpp
-	cam_v2_cam_pdu_descriptions
-	cpm_v1_19_cpm_pdu_descriptions
-	denm_v2_denm_pdu_descriptions
-	dsrc_v2_mapem_pdu_descriptions
-	dsrc_v2_spatem_pdu_descriptions
-	dsrc_v2_srem_pdu_descriptions
-	dsrc_v2_ssem_pdu_descriptions
-	mcm_dmove_mcm_dmove
-	mcm_transaid_mcm_transaid
-	its_container_v2_its_container
-	cpm_v1_19_cpm_freespaceaddendum_descriptions
-	cpm_v1_19_cpm_sensorinformation_descriptions
-	cpm_v1_19_cpm_originatingstationdata_descriptions
-	cpm_v1_19_cpm_perceivedobject_descriptions
-)
+  dsrc_v2_dsrc
+  denm_v2_denm_pdu_descriptions
+  dsrc_v2_mapem_pdu_descriptions
+  dsrc_v2_spatem_pdu_descriptions
+  dsrc_v2_srem_pdu_descriptions
+  cpm_v1_19_cpm_pdu_descriptions
+  mcm_dmove_mcm_dmove
+
+  cam_v2_cam_pdu_descriptions
+  cpm_v1_19_cpm_freespaceaddendum_descriptions
+  cpm_v1_19_cpm_sensorinformation_descriptions
+  cpm_v1_19_cpm_originatingstationdata_descriptions
+  cpm_v1_19_cpm_perceivedobject_descriptions
+  dsrc_v2_srem_pdu_descriptions
+  )
 
 add_message_files(
   FILES
@@ -64,15 +64,14 @@ generate_messages(
     nav_msgs
     geometry_msgs
 #   strp_fau
-    cam_v2_cam_pdu_descriptions
-    cpm_v1_19_cpm_pdu_descriptions
+    dsrc_v2_dsrc
+    denm_v2_denm_pdu_descriptions
     dsrc_v2_mapem_pdu_descriptions
     dsrc_v2_spatem_pdu_descriptions
     dsrc_v2_srem_pdu_descriptions
-    denm_v2_denm_pdu_descriptions
-    mcm_transaid_mcm_transaid
+    cpm_v1_19_cpm_pdu_descriptions
     mcm_dmove_mcm_dmove
-  )
+)
 
 catkin_package(
   INCLUDE_DIRS include
@@ -80,13 +79,11 @@ catkin_package(
   CATKIN_DEPENDS roscpp std_msgs message_runtime geometry_msgs nav_msgs
   CATKIN_DEPENDS adore_if_ros_msg
 #  CATKIN_DEPENDS strp_fau
-  CATKIN_DEPENDS cam_v2_cam_pdu_descriptions
-  CATKIN_DEPENDS cpm_v1_19_cpm_pdu_descriptions
+  CATKIN_DEPENDS denm_v2_denm_pdu_descriptions
   CATKIN_DEPENDS dsrc_v2_mapem_pdu_descriptions
   CATKIN_DEPENDS dsrc_v2_spatem_pdu_descriptions
-  CATKIN_DEPENDS dsrc_v2_srem_pdu_descriptions
-  CATKIN_DEPENDS mcm_transaid_mcm_transaid
-  CATKIN_DEPENDS denm_v2_denm_pdu_descriptions
+ # CATKIN_DEPENDS dsrc_v2_srem_pdu_descriptions
+  CATKIN_DEPENDS cpm_v1_19_cpm_pdu_descriptions
   CATKIN_DEPENDS mcm_dmove_mcm_dmove
 #  DEPENDS system_lib
 )
