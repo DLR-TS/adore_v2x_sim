@@ -38,7 +38,8 @@ WORKDIR /tmp/${PROJECT}/build
 RUN source /opt/ros/noetic/setup.bash && \
     cmake .. -DCMAKE_BUILD_TYPE=Release && \
     cmake --build . --config Release --target install -- -j $(nproc) && \
-    cpack -G DEB && find . -type f -name "*.deb" | xargs mv -t .
+    cpack -G DEB && find . -type f -name "*.deb" | xargs mv -t . && \
+    cd /tmp/${PROJECT}/build && ln -s devel install 
 
 
 #RUN source /opt/ros/noetic/setup.bash && \
@@ -47,8 +48,9 @@ RUN source /opt/ros/noetic/setup.bash && \
 #    cpack -G DEB && find . -type f -name "*.deb" | xargs mv -t . 
 #RUN bash catkin_build.sh
 
-FROM alpine:3.14
+# FROM alpine:3.14
 
-ARG PROJECT
-COPY --from=adore_v2x_sim_builder /tmp/${PROJECT}/build /tmp/${PROJECT}/build
+# ARG PROJECT
 
+# COPY --from=adore_v2x_sim_builder /tmp/${PROJECT}/build /tmp/${PROJECT}/build
+# COPY --from=adore_v2x_sim_builder /tmp/${PROJECT}/msg /tmp/${PROJECT}/msg
