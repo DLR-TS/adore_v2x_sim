@@ -11,7 +11,7 @@ ARG REQUIREMENTS_FILE
 
 RUN mkdir -p /tmp/${PROJECT}
 WORKDIR /tmp/${PROJECT}
-copy files/${REQUIREMENTS_FILE} /tmp/${PROJECT}
+COPY files/${REQUIREMENTS_FILE} /tmp/${PROJECT}
 
 
 RUN apt-get update && \
@@ -36,7 +36,7 @@ WORKDIR /tmp/${PROJECT}/build
 
 
 RUN source /opt/ros/noetic/setup.bash && \
-    cmake .. && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release && \
     cmake --build . --config Release --target install -- -j $(nproc) && \
     cpack -G DEB && find . -type f -name "*.deb" | xargs mv -t .
 

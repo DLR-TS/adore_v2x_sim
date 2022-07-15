@@ -74,18 +74,18 @@ generate_messages(
 )
 
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES adore_v2x_sim
-  CATKIN_DEPENDS roscpp std_msgs message_runtime geometry_msgs nav_msgs
-  CATKIN_DEPENDS adore_if_ros_msg
-#  CATKIN_DEPENDS strp_fau
-  CATKIN_DEPENDS denm_v2_denm_pdu_descriptions
-  CATKIN_DEPENDS dsrc_v2_mapem_pdu_descriptions
-  CATKIN_DEPENDS dsrc_v2_spatem_pdu_descriptions
- # CATKIN_DEPENDS dsrc_v2_srem_pdu_descriptions
-  CATKIN_DEPENDS cpm_v1_19_cpm_pdu_descriptions
-  CATKIN_DEPENDS mcm_dmove_mcm_dmove
-#  DEPENDS system_lib
+  CATKIN_DEPENDS
+    roscpp
+    std_msgs
+    message_runtime
+    geometry_msgs
+    nav_msgs
+    adore_if_ros_msg
+    denm_v2_denm_pdu_descriptions
+    dsrc_v2_mapem_pdu_descriptions
+    dsrc_v2_spatem_pdu_descriptions
+    cpm_v1_19_cpm_pdu_descriptions
+    mcm_dmove_mcm_dmove
 )
 
 include_directories(
@@ -93,46 +93,20 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(channel_sim_node src/channel_sim_node.cpp)
-add_dependencies(channel_sim_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(channel_sim_node  ${catkin_LIBRARIES} )
 
-include(PackagingInstallTargets)
+
+add_executable(channel_sim_node src/channel_sim_node.cpp)
+target_link_libraries(channel_sim_node  ${PROJECT_NAME}::${PROJECT_NAME}  ${catkin_LIBRARIES} )
+
+set_target_properties(channel_sim_node PROPERTIES
+    INSTALL_RPATH "${CMAKE_CURRENT_SOURCE_DIR}/../${PROJECT_NAME}/build/install/lib"
+    BUILD_WITH_INSTALL_RPATH 1)
 
 ## Mark cpp header files for installation
 install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-  FILES_MATCHING PATTERN "*.h"
-  PATTERN ".svn" EXCLUDE
+DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+FILES_MATCHING PATTERN "*.h"
+PATTERN ".svn" EXCLUDE
 )
 
-install(TARGETS ${PROJECT_NAME}
-        EXPORT ${PROJECT_NAME}_Targets
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-
-
-include(CMakePackageConfigHelpers)
-
-configure_package_config_file(
-  "${PROJECT_SOURCE_DIR}/cmake/LibraryConfig.cmake.in"
-  "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-  INSTALL_DESTINATION
-  ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
-
-install(EXPORT ${PROJECT_NAME}_Targets
-        COMPONENT ${PROJECT_NAME}
-        FILE ${PROJECT_NAME}Targets.cmake
-        NAMESPACE ${PROJECT_NAME}::
-        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
-)
-
-install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-              # "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake
-        COMPONENT ${PROJECT_NAME}
-)
-
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/build/install/include DESTINATION .) 
-
+include(PackagingInstallTargets)
