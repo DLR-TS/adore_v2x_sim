@@ -1,4 +1,4 @@
-# *******************************************************************************
+# **:*****************************************************************************
 # * Copyright (C) 2017-2020 German Aerospace Center (DLR). 
 # * Eclipse ADORe, Automated Driving Open Research https://eclipse.org/adore
 # *
@@ -93,20 +93,17 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-
-
 add_executable(channel_sim_node src/channel_sim_node.cpp)
-target_link_libraries(channel_sim_node  ${PROJECT_NAME}::${PROJECT_NAME}  ${catkin_LIBRARIES} )
+target_link_libraries(
+    channel_sim_node  
+    ${PROJECT_NAME}::${PROJECT_NAME}  
+    ${catkin_LIBRARIES}
+)
 
-set_target_properties(channel_sim_node PROPERTIES
+set_target_properties(
+    channel_sim_node PROPERTIES
     INSTALL_RPATH "${CMAKE_CURRENT_SOURCE_DIR}/../${PROJECT_NAME}/build/install/lib"
-    BUILD_WITH_INSTALL_RPATH 1)
-
-## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-# DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-# FILES_MATCHING PATTERN "*.h"
-# PATTERN ".svn" EXCLUDE
-# )
+    BUILD_WITH_INSTALL_RPATH 1
+)
 
 include(PackagingInstallTargets)
