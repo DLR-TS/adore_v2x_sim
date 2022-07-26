@@ -22,7 +22,7 @@ RUN mkdir -p /tmp/${PROJECT}/build/devel && \
     cd /tmp/${PROJECT}/build && ln -s devel install 
 
 COPY --from=v2x_if_ros_msg /tmp/v2x_if_ros_msg /tmp/v2x_if_ros_msg
-WORKDIR /tmp/v2x_if_ros_msg/build
+WORKDIR /tmp/v2x_if_ros_msg/v2x_if_ros_msg/build
 RUN cmake --install . --prefix /tmp/${PROJECT}/build/install
 
 
@@ -40,11 +40,6 @@ RUN source /opt/ros/noetic/setup.bash && \
     cmake --build . --config Release --target install -- -j $(nproc) && \
     cpack -G DEB && find . -type f -name "*.deb" | xargs mv -t .
 
-#RUN source /opt/ros/noetic/setup.bash && \
-#    cmake .. -DBUILD_adore_TESTING=ON -DCMAKE_PREFIX_PATH=install -DCMAKE_INSTALL_PREFIX:PATH=install && \
-#    cmake --build . --config Release --target install -- -j $(nproc) && \
-#    cpack -G DEB && find . -type f -name "*.deb" | xargs mv -t . 
-#RUN bash catkin_build.sh
 
 # FROM alpine:3.14
 
