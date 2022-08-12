@@ -1,5 +1,6 @@
 SHELL:=/bin/bash
 
+
 .DEFAULT_GOAL := all
 
 PROJECT="adore_v2x_sim"
@@ -19,7 +20,8 @@ help:
 all: build
 
 .PHONY: build 
-build: clean
+build: clean ## Build component
+	cd apt_cacher_ng_docker && make start_apt_cacher_ng
 	rm -rf ${ROOT_DIR}/${PROJECT}/build
 	cd v2x_if_ros_msg && make 
 	cd "${ROOT_DIR}" && \
@@ -27,9 +29,10 @@ build: clean
         docker build --network="host" -t ${IMAGE_NAME} . 
 	cd "${ROOT_DIR}" && \
         docker cp $$(docker create --rm ${IMAGE_NAME}):/tmp/${PROJECT}/build ${PROJECT}/build
+	cd apt_cacher_ng_docker && make get_cache_statistics
 
 .PHONY: clean 
-clean: 
+clean: ## Clean component, delete docker image and build artifacts. 
 	rm -rf ${ROOT_DIR}/${PROJECT}/build
 	docker rm $$(docker ps -a -q --filter "ancestor=${IMAGE_NAME}") 2> /dev/null || true
 	docker rmi $$(docker images -q ${IMAGE_NAME}) 2> /dev/null || true
