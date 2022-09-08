@@ -6,7 +6,7 @@ SHELL:=/bin/bash
 PROJECT="adore_v2x_sim"
 VERSION="latest"
 IMAGE_NAME="${PROJECT}:${VERSION}"
-ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+ROOT_DIR:=$(shell dirname "$(realpath $(firstword $(MAKEFILE_LIST)))")
 
 .EXPORT_ALL_VARIABLES:
 DOCKER_BUILDKIT?=1
@@ -28,7 +28,7 @@ build: clean ## Build component
         touch CATKIN_IGNORE && \
         docker build --network="host" -t ${IMAGE_NAME} . 
 	cd "${ROOT_DIR}" && \
-        docker cp $$(docker create --rm ${IMAGE_NAME}):/tmp/${PROJECT}/build ${PROJECT}/build
+		docker cp $$(docker create --rm ${IMAGE_NAME}):/tmp/${PROJECT}/build "${PROJECT}/build"
 	cd apt_cacher_ng_docker && make get_cache_statistics
 
 .PHONY: clean 
