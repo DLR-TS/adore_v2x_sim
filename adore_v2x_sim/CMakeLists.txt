@@ -11,7 +11,7 @@
 # * Contributors: 
 # *  Daniel Heß
 # ********************************************************************************
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.13)
 project(adore_v2x_sim)
 
 add_library(${PROJECT_NAME} INTERFACE)
@@ -28,9 +28,9 @@ include(Packing)
 
 set(CMAKE_PREFIX_PATH "$ENV{CMAKE_PREFIX_PATH};/tmp/v2x_if_ros_msg/build/install")
 find_package(catkin REQUIRED COMPONENTS
-	message_generation
-	nav_msgs
-	roscpp
+  message_generation
+  nav_msgs
+  roscpp
   dsrc_v2_dsrc
   denm_v2_denm_pdu_descriptions
   dsrc_v2_mapem_pdu_descriptions
@@ -38,19 +38,18 @@ find_package(catkin REQUIRED COMPONENTS
   dsrc_v2_srem_pdu_descriptions
   cpm_v1_19_cpm_pdu_descriptions
   mcm_dmove_mcm_dmove
-
   cam_v2_cam_pdu_descriptions
   cpm_v1_19_cpm_freespaceaddendum_descriptions
   cpm_v1_19_cpm_sensorinformation_descriptions
   cpm_v1_19_cpm_originatingstationdata_descriptions
   cpm_v1_19_cpm_perceivedobject_descriptions
   dsrc_v2_srem_pdu_descriptions
-  )
+ )
 
 add_message_files(
   FILES
-  V2XMetaSim.msg
   SimSPATEM.msg
+  V2XMetaSim.msg
   SimMAPEM.msg
   SimMCM.msg
   SimDENM.msg
@@ -59,18 +58,18 @@ add_message_files(
 )
 
 generate_messages(
-    DEPENDENCIES
-    std_msgs  # Or other packages containing msgs
-    nav_msgs
-    geometry_msgs
+  DEPENDENCIES
+  std_msgs  # Or other packages containing msgs
+  nav_msgs
+  geometry_msgs
 #   strp_fau
-    dsrc_v2_dsrc
-    denm_v2_denm_pdu_descriptions
-    dsrc_v2_mapem_pdu_descriptions
-    dsrc_v2_spatem_pdu_descriptions
-    dsrc_v2_srem_pdu_descriptions
-    cpm_v1_19_cpm_pdu_descriptions
-    mcm_dmove_mcm_dmove
+  dsrc_v2_dsrc
+  denm_v2_denm_pdu_descriptions
+  dsrc_v2_mapem_pdu_descriptions
+  dsrc_v2_spatem_pdu_descriptions
+  dsrc_v2_srem_pdu_descriptions
+  cpm_v1_19_cpm_pdu_descriptions
+  mcm_dmove_mcm_dmove
 )
 
 catkin_package(
@@ -93,7 +92,18 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(channel_sim_node src/channel_sim_node.cpp)
+add_executable(
+  channel_sim_node 
+    src/channel_sim_node.cpp
+)
+target_include_directories(
+  channel_sim_node
+  PRIVATE 
+    include 
+    ${catkin_INCLUDE_DIRS}
+)
+#add_dependencies(channel_sim_node ${catkin_EXPORTED_TARGETS})
+add_dependencies(channel_sim_node ${${PROJECT_NAME}_EXPORTED_TARGETS})
 target_link_libraries(
     channel_sim_node  
     ${PROJECT_NAME}::${PROJECT_NAME}  
