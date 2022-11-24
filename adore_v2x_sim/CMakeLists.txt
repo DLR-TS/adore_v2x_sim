@@ -26,7 +26,12 @@ include(GNUInstallDirs)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(Packing)
 
-set(CMAKE_PREFIX_PATH "$ENV{CMAKE_PREFIX_PATH};/tmp/v2x_if_ros_msg/build/install")
+list(APPEND CMAKE_PREFIX_PATH "$ENV{CMAKE_PREFIX_PATH}")
+message("CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
+
+set(PROJECT_INCLUDE_PATH "${PROJECT_SOURCE_DIR}/build/devel/include")
+
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../v2x_if_ros_msg/v2x_if_ros_msg/build/install")
 find_package(catkin REQUIRED COMPONENTS
   message_generation
   nav_msgs

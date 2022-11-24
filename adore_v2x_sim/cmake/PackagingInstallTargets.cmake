@@ -31,5 +31,5 @@ install(
     COMPONENT ${PROJECT_NAME}
 )
 
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/build/install/include DESTINATION .) 
+install(DIRECTORY ${PROJECT_INCLUDE_PATH} DESTINATION .)
 
