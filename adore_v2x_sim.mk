@@ -33,7 +33,7 @@ include ${adore_v2x_sim_MAKEFILE_PATH}/v2x_if_ros_msg/v2x_if_ros_msg.mk
 
 .PHONY: build_adore_v2x_sim 
 build_adore_v2x_sim: ## Build adore_v2x_sim
-	cd "${adore_v2x_sim_MAKEFILE_PATH}" && make
+	cd "${adore_v2x_sim_MAKEFILE_PATH}" && make build
 
 .PHONY: clean_adore_v2x_sim
 clean_adore_v2x_sim: ## Clean adore_v2x_sim build artifacts
