@@ -12,9 +12,9 @@ ADORE_V2X_SIM_MAKEFILE_PATH:=$(shell realpath "$(shell dirname "$(lastword $(MAK
 ifeq ($(SUBMODULES_PATH),)
 ADORE_V2X_SIM_SUBMODULES_PATH:=${ADORE_V2X_SIM_MAKEFILE_PATH}
 else
-ADORE_V2X_SIM_SUBMODULES_PATH:=$(SUBMODULES_PATH)
+ADORE_V2X_SIM_SUBMODULES_PATH:=$(shell realpath ${SUBMODULES_PATH})
 endif
-MAKE_GADGETS_PATH:=${ADORE_V2X_SIM_SUBMODULES_PATH}/adore_if_ros_msg/make_gadgets
+MAKE_GADGETS_PATH:=${ADORE_V2X_SIM_SUBMODULES_PATH}/make_gadgets
 ifeq ($(wildcard $(MAKE_GADGETS_PATH)),)
 $(info INFO: To clone submodules use: 'git submodules update --init --recursive')
 $(info INFO: To specify alternative path for submodules use: SUBMODULES_PATH="<path to submodules>" make build')
@@ -36,11 +36,11 @@ include ${MAKE_GADGETS_PATH}/docker/docker-tools.mk
 include ${APT_CACHER_NG_DOCKER_PATH}/apt_cacher_ng_docker.mk
 include ${ADORE_V2X_SIM_SUBMODULES_PATH}/v2x_if_ros_msg/v2x_if_ros_msg.mk
 
-
+$(info ADORE_V2X_SIM_SUBMODULES_PATH: ${ADORE_V2X_SIM_SUBMODULES_PATH})
 
 .PHONY: build_adore_v2x_sim 
 build_adore_v2x_sim: ## Build adore_v2x_sim
-	cd "${ADORE_V2X_SIM_MAKEFILE_PATH}" && make
+	cd "${ADORE_V2X_SIM_MAKEFILE_PATH}" && env -i make build
 
 .PHONY: clean_adore_v2x_sim
 clean_adore_v2x_sim: ## Clean adore_v2x_sim build artifacts
@@ -53,9 +53,5 @@ branch_adore_v2x_sim: ## Returns the current docker safe/sanitized branch for ad
 .PHONY: image_adore_v2x_sim
 image_adore_v2x_sim: ## Returns the current docker image name for adore_v2x_sim
 	@printf "%s\n" ${ADORE_V2X_SIM_IMAGE}
-
-.PHONY: update_adore_v2x_sim
-update_adore_v2x_sim:
-	cd "${ADORE_V2X_SIM_MAKEFILE_PATH}" && git pull
 
 endif
