@@ -37,28 +37,22 @@ include ${MAKE_GADGETS_PATH}/docker/docker-tools.mk
 include ${APT_CACHER_NG_DOCKER_PATH}/apt_cacher_ng_docker.mk
 include ${ADORE_V2X_SIM_SUBMODULES_PATH}/v2x_if_ros_msg/v2x_if_ros_msg.mk
 
-$(info ADORE_V2X_SIM_SUBMODULES_PATH: ${ADORE_V2X_SIM_SUBMODULES_PATH})
-
-.PHONY: clear_env
-clear_env:
-	$(eval MAKE_GADGETS_MAKEFILE_PATH := $(shell unset MAKE_GADGETS_MAKEFILE_PATH))
-	$(eval APT_CACHER_NG_DOCKER_MAKEFILE_PATH := $(shell unset APT_CACHER_NG_DOCKER_MAKEFILE_PATH))
+#$(info ADORE_V2X_SIM_SUBMODULES_PATH: ${ADORE_V2X_SIM_SUBMODULES_PATH})
 
 .PHONY: build_adore_v2x_sim 
-build_adore_v2x_sim: clear_env ## Build adore_v2x_sim
-	$(eval MAKE_GADGETS_MAKEFILE_PATH := $(shell unset MAKE_GADGETS_MAKEFILE_PATH))
+build_adore_v2x_sim: ## Build adore_v2x_sim
 	cd "${ADORE_V2X_SIM_MAKEFILE_PATH}" && make build
 
 .PHONY: clean_adore_v2x_sim
-clean_adore_v2x_sim: clear_env ## Clean adore_v2x_sim build artifacts
+clean_adore_v2x_sim: ## Clean adore_v2x_sim build artifacts
 	cd "${ADORE_V2X_SIM_MAKEFILE_PATH}" && make clean
 
 .PHONY: branch_adore_v2x_sim
-branch_adore_v2x_sim: clear_env ## Returns the current docker safe/sanitized branch for adore_v2x_sim
+branch_adore_v2x_sim: ## Returns the current docker safe/sanitized branch for adore_v2x_sim
 	@printf "%s\n" ${ADORE_V2X_SIM_TAG}
 
 .PHONY: image_adore_v2x_sim
-image_adore_v2x_sim: clear_env ## Returns the current docker image name for adore_v2x_sim
+image_adore_v2x_sim: ## Returns the current docker image name for adore_v2x_sim
 	@printf "%s\n" ${ADORE_V2X_SIM_IMAGE}
 
 endif

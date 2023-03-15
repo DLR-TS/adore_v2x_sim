@@ -6,6 +6,8 @@ MAKEFILE_PATH:=$(shell dirname "$(abspath "$(lastword $(MAKEFILE_LIST)"))")
 #$(info "ROOT_DIR: ${ROOT_DIR}")
 #$(info "MAKEFILE_PATH: ${MAKEFILE_PATH}")
 
+.ONESHELL:
+
 .DEFAULT_GOAL := all 
 
 MAKEFLAGS += --no-print-directory
