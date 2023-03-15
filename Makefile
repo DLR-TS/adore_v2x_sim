@@ -11,12 +11,7 @@ MAKEFILE_PATH:=$(shell dirname "$(abspath "$(lastword $(MAKEFILE_LIST)"))")
 MAKEFLAGS += --no-print-directory
 
 .EXPORT_ALL_VARIABLES:
-include apt_cacher_ng_docker/apt_cacher_ng_docker.mk
-include v2x_if_ros_msg/make_gadgets/make_gadgets.mk
-include v2x_if_ros_msg/make_gadgets/docker/docker-tools.mk
-include v2x_if_ros_msg/v2x_if_ros_msg.mk
 include adore_v2x_sim.mk
-
 
 DOCKER_BUILDKIT?=1
 DOCKER_CONFIG?=
@@ -34,7 +29,7 @@ build: start_apt_cacher_ng _build get_cache_statistics ## Build adore_v2x_sim
 
 .PHONY: _build 
 _build: root_check docker_group_check set_env clean 
-	cd "${ROOT_DIR}/v2x_if_ros_msg" && make build 
+	cd "${ADORE_V2X_SIM_SUBMODULES_PATH}/v2x_if_ros_msg" && make build 
 	cd "${ROOT_DIR}" && touch CATKIN_IGNORE
 	docker build --network host \
                  --tag ${PROJECT}:${TAG} \
@@ -44,7 +39,7 @@ _build: root_check docker_group_check set_env clean
 
 .PHONY: clean
 clean: set_env ## Clean adore_v2x_sim build artifacts 
-	cd "${ROOT_DIR}/v2x_if_ros_msg" && make clean 
+	cd "${ADORE_V2X_SIM_SUBMODULES_PATH}/v2x_if_ros_msg" && make clean 
 	rm -rf "${ROOT_DIR}/${PROJECT}/build"
 	docker rm $$(docker ps -a -q --filter "ancestor=${PROJECT}:${TAG}") --force 2> /dev/null || true
 	docker rmi $$(docker images -q ${PROJECT}:${TAG}) --force 2> /dev/null || true
