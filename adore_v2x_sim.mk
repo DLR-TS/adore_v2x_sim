@@ -1,9 +1,8 @@
 # This Makefile contains useful targets that can be included in downstream projects.
 
-ifndef adore_v2x_sim_MAKEFILE_PATH
+ifeq ($(filter adore_v2x_sim.mk, $(notdir $(MAKEFILE_LIST))), adore_v2x_sim.mk)
 
 MAKEFLAGS += --no-print-directory
-
 
 .EXPORT_ALL_VARIABLES:
 ADORE_V2X_SIM_PROJECT:=adore_v2x_sim
@@ -14,13 +13,13 @@ ADORE_V2X_SIM_SUBMODULES_PATH:=${ADORE_V2X_SIM_MAKEFILE_PATH}
 else
 ADORE_V2X_SIM_SUBMODULES_PATH:=$(shell realpath ${SUBMODULES_PATH})
 endif
-MAKE_GADGETS_PATH:=${ADORE_V2X_SIM_SUBMODULES_PATH}/make_gadgets
 
+MAKE_GADGETS_PATH:=${ADORE_V2X_SIM_SUBMODULES_PATH}/make_gadgets
 ifeq ($(wildcard $(MAKE_GADGETS_PATH)/*),)
-$(info INFO: To clone submodules use: 'git submodules update --init --recursive')
-$(info INFO: To specify alternative path for submodules use: SUBMODULES_PATH="<path to submodules>" make build')
-$(info INFO: Default submodule path is: ${ADORE_V2X_SIM_MAKEFILE_PATH}')
-$(error "ERROR: ${MAKE_GADGETS_PATH} does not exist. Did you clone the submodules?")
+    $(info INFO: To clone submodules use: 'git submodules update --init --recursive')
+    $(info INFO: To specify alternative path for submodules use: SUBMODULES_PATH="<path to submodules>" make build')
+    $(info INFO: Default submodule path is: ${ADORE_V2X_SIM_MAKEFILE_PATH}')
+    $(error "ERROR: ${MAKE_GADGETS_PATH} does not exist. Did you clone the submodules?")
 endif
 APT_CACHER_NG_DOCKER_PATH:=${ADORE_V2X_SIM_SUBMODULES_PATH}/apt_cacher_ng_docker
 REPO_DIRECTORY:=${ADORE_V2X_SIM_MAKEFILE_PATH}
