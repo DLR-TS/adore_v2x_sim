@@ -1,28 +1,20 @@
 SHELL:=/bin/bash
 
+.DEFAULT_GOAL := all 
+
 ROOT_DIR:=$(shell dirname "$(realpath $(firstword $(MAKEFILE_LIST)))")
 MAKEFILE_PATH:=$(shell dirname "$(abspath "$(lastword $(MAKEFILE_LIST)"))")
 
-#$(info "ROOT_DIR: ${ROOT_DIR}")
-#$(info "MAKEFILE_PATH: ${MAKEFILE_PATH}")
-
-.DEFAULT_GOAL := help 
-
 MAKEFLAGS += --no-print-directory
 
-.EXPORT_ALL_VARIABLES:
-include apt_cacher_ng_docker/apt_cacher_ng_docker.mk
-include v2x_if_ros_msg/make_gadgets/make_gadgets.mk
-include v2x_if_ros_msg/make_gadgets/docker/docker-tools.mk
-include v2x_if_ros_msg/v2x_if_ros_msg.mk
 include adore_v2x_sim.mk
 
-
+.EXPORT_ALL_VARIABLES:
 DOCKER_BUILDKIT?=1
 DOCKER_CONFIG?=
 
 .PHONY: all
-all: build
+all: help 
 
 .PHONY: set_env 
 set_env: 
@@ -30,11 +22,11 @@ set_env:
 	$(eval TAG := ${ADORE_V2X_SIM_TAG})
 
 .PHONY: build 
-build: start_apt_cacher_ng _build get_cache_statistics ## Build adore_v2x_sim
+build: set_env start_apt_cacher_ng _build get_cache_statistics ## Build adore_v2x_sim
 
 .PHONY: _build 
-_build: root_check docker_group_check set_env clean 
-	cd "${ROOT_DIR}/v2x_if_ros_msg" && make build 
+_build: set_env root_check docker_group_check clean 
+	cd "${ADORE_V2X_SIM_SUBMODULES_PATH}/v2x_if_ros_msg" && make build 
 	cd "${ROOT_DIR}" && touch CATKIN_IGNORE
 	docker build --network host \
                  --tag ${PROJECT}:${TAG} \
@@ -44,7 +36,7 @@ _build: root_check docker_group_check set_env clean
 
 .PHONY: clean
 clean: set_env ## Clean adore_v2x_sim build artifacts 
-	cd "${ROOT_DIR}/v2x_if_ros_msg" && make clean 
+	cd "${ADORE_V2X_SIM_SUBMODULES_PATH}/v2x_if_ros_msg" && make clean 
 	rm -rf "${ROOT_DIR}/${PROJECT}/build"
 	docker rm $$(docker ps -a -q --filter "ancestor=${PROJECT}:${TAG}") --force 2> /dev/null || true
 	docker rmi $$(docker images -q ${PROJECT}:${TAG}) --force 2> /dev/null || true
