@@ -17,35 +17,39 @@ COPY files/${REQUIREMENTS_FILE} /tmp/${PROJECT}
 
 
 RUN apt-get update && \
-    xargs apt-get install --no-install-recommends -y < ${REQUIREMENTS_FILE} && \
+    apt-get install --no-install-recommends -y $(sed '/^#/d' ${REQUIREMENTS_FILE}) && \
     rm -rf /var/lib/apt/lists/*
 
 COPY ${PROJECT} /tmp/${PROJECT}/${PROJECT}
 
+FROM adore_v2x_sim_requirements_base AS adore_v2x_sim_external_library_requirements_base
 ARG INSTALL_PREFIX=/tmp/${PROJECT}/${PROJECT}/build/install
 RUN mkdir -p "${INSTALL_PREFIX}"
+RUN cd /tmp/${PROJECT}/${PROJECT}/build && ln -sf install devel
 
-COPY --from=v2x_if_ros_msg /tmp/v2x_if_ros_msg /tmp/v2x_if_ros_msg
-WORKDIR /tmp/v2x_if_ros_msg/v2x_if_ros_msg/build
+ARG LIB=v2x_if_ros_msg
+COPY --from=v2x_if_ros_msg /tmp/${LIB} /tmp/${LIB}
+WORKDIR /tmp/${LIB}/${LIB}/build
 RUN cmake --install . --prefix ${INSTALL_PREFIX} 
 
 
 
 COPY ${PROJECT} /tmp/${PROJECT}
 
-FROM adore_v2x_sim_requirements_base AS adore_v2x_sim_builder
+FROM adore_v2x_sim_external_library_requirements_base AS adore_v2x_sim_builder
 ARG PROJECT
-WORKDIR /tmp/${PROJECT}/${PROJECT}
-RUN mkdir -p build 
+
 SHELL ["/bin/bash", "-c"]
 WORKDIR /tmp/${PROJECT}/${PROJECT}/build
 
 
 RUN source /opt/ros/noetic/setup.bash && \
-    cmake .. && \
+    cmake .. \
+             -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+             -DCMAKE_BUILD_TYPE=Release \
+             -DCMAKE_INSTALL_PREFIX="install" && \
     cmake --build . --config Release --target install -- -j $(nproc) && \
     cpack -G DEB && find . -type f -name "*.deb" | xargs mv -t . && \
-    cd /tmp/${PROJECT}/${PROJECT}/build && ln -s devel install && \
     mv CMakeCache.txt CMakeCache.txt.build
 
 FROM alpine:3.14
