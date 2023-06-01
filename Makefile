@@ -3,15 +3,15 @@ SHELL:=/bin/bash
 .DEFAULT_GOAL := all 
 
 ROOT_DIR:=$(shell dirname "$(realpath $(firstword $(MAKEFILE_LIST)))")
-MAKEFILE_PATH:=$(shell dirname "$(abspath "$(lastword $(MAKEFILE_LIST)"))")
 
 MAKEFLAGS += --no-print-directory
 
-include adore_v2x_sim.mk
 
 .EXPORT_ALL_VARIABLES:
 DOCKER_BUILDKIT?=1
 DOCKER_CONFIG?=
+
+include adore_v2x_sim.mk
 
 .PHONY: all
 all: help 
