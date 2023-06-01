@@ -48,9 +48,9 @@ RUN source /opt/ros/noetic/setup.bash && \
     cd /tmp/${PROJECT}/${PROJECT}/build && ln -s devel install && \
     mv CMakeCache.txt CMakeCache.txt.build
 
-#FROM alpine:3.14
+FROM alpine:3.14
 
-#ARG PROJECT
+ARG PROJECT
 
-#COPY --from=adore_v2x_sim_builder /tmp/${PROJECT}/${PROJECT} /tmp/${PROJECT}/${PROJECT}
+COPY --from=adore_v2x_sim_builder /tmp/${PROJECT}/${PROJECT} /tmp/${PROJECT}/${PROJECT}
 
