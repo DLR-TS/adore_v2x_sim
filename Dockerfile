@@ -20,15 +20,18 @@ RUN apt-get update && \
     xargs apt-get install --no-install-recommends -y < ${REQUIREMENTS_FILE} && \
     rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /tmp/${PROJECT}/${PROJECT}/build/devel && \
-    cd /tmp/${PROJECT}/${PROJECT}/build && ln -s devel install 
+COPY ${PROJECT} /tmp/${PROJECT}/${PROJECT}
+
+ARG INSTALL_PREFIX=/tmp/${PROJECT}/${PROJECT}/build/install
+RUN mkdir -p "${INSTALL_PREFIX}"
 
 COPY --from=v2x_if_ros_msg /tmp/v2x_if_ros_msg /tmp/v2x_if_ros_msg
 WORKDIR /tmp/v2x_if_ros_msg/v2x_if_ros_msg/build
-RUN cmake --install . --prefix /tmp/${PROJECT}/${PROJECT}/build/install
+RUN cmake --install . --prefix ${INSTALL_PREFIX} 
 
 
-COPY ${PROJECT} /tmp/${PROJECT}/${PROJECT}
+
+COPY ${PROJECT} /tmp/${PROJECT}
 
 FROM adore_v2x_sim_requirements_base AS adore_v2x_sim_builder
 ARG PROJECT
@@ -45,9 +48,9 @@ RUN source /opt/ros/noetic/setup.bash && \
     cd /tmp/${PROJECT}/${PROJECT}/build && ln -s devel install && \
     mv CMakeCache.txt CMakeCache.txt.build
 
-FROM alpine:3.14
+#FROM alpine:3.14
 
-ARG PROJECT
+#ARG PROJECT
 
-COPY --from=adore_v2x_sim_builder /tmp/${PROJECT}/${PROJECT} /tmp/${PROJECT}/${PROJECT}
+#COPY --from=adore_v2x_sim_builder /tmp/${PROJECT}/${PROJECT} /tmp/${PROJECT}/${PROJECT}
 
