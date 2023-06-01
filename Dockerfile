@@ -48,6 +48,6 @@ RUN source /opt/ros/noetic/setup.bash && \
 FROM alpine:3.14
 
 ARG PROJECT
-#COPY --from=adore_v2x_sim_builder /tmp/${PROJECT}/build /tmp/${PROJECT}/build
+
 COPY --from=adore_v2x_sim_builder /tmp/${PROJECT}/${PROJECT} /tmp/${PROJECT}/${PROJECT}
 
