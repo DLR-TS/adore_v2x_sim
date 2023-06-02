@@ -25,8 +25,7 @@ set_env:
 build: set_env start_apt_cacher_ng _build get_cache_statistics ## Build adore_v2x_sim
 
 .PHONY: _build 
-_build: set_env root_check docker_group_check clean 
-	cd "${ADORE_V2X_SIM_SUBMODULES_PATH}/v2x_if_ros_msg" && make build 
+_build: set_env root_check docker_group_check build_v2x_if_ros_msg
 	cd "${ROOT_DIR}" && touch CATKIN_IGNORE
 	docker build --network host \
                  --tag ${PROJECT}:${TAG} \
