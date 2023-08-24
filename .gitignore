@@ -1,4 +1,5 @@
 **/build
 **/.git
+.log
 CATKIN_IGNORE
 apt_cacher_ng_docker

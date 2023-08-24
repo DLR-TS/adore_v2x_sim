@@ -12,6 +12,7 @@ DOCKER_BUILDKIT?=1
 DOCKER_CONFIG?=
 
 include adore_v2x_sim.mk
+include ${ADORE_V2X_SIM_SUBMODULES_PATH}/ci_teststand/ci_teststand.mk
 
 .PHONY: all
 all: help 
@@ -22,7 +23,7 @@ set_env:
 	$(eval TAG := ${ADORE_V2X_SIM_TAG})
 
 .PHONY: build 
-build: set_env start_apt_cacher_ng _build get_cache_statistics ## Build adore_v2x_sim
+build: set_env start_apt_cacher_ng clean _build get_cache_statistics ## Build adore_v2x_sim
 
 .PHONY: _build 
 _build: set_env root_check docker_group_check build_v2x_if_ros_msg
@@ -39,3 +40,6 @@ clean: set_env ## Clean adore_v2x_sim build artifacts
 	rm -rf "${ROOT_DIR}/${PROJECT}/build"
 	docker rm $$(docker ps -a -q --filter "ancestor=${PROJECT}:${TAG}") --force 2> /dev/null || true
 	docker rmi $$(docker images -q ${PROJECT}:${TAG}) --force 2> /dev/null || true
+
+.PHONY: test
+test: ci_test
