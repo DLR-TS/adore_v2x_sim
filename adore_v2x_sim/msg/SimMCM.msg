@@ -12,4 +12,4 @@
 # * Daniel Heß
 # ********************************************************************************
 V2XMetaSim meta                                 #meta information
-mcm_dmove_mcm_dmove/MCM data               #message content
+mcm_dmove/MCM data               #message content

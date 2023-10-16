@@ -42,7 +42,7 @@
   <build_depend>denm_v2_denm_pdu_descriptions</build_depend>
   <exec_depend>denm_v2_denm_pdu_descriptions</exec_depend>
   <depend>mcm_transaid_mcm_transaid</depend>
-  <depend>mcm_dmove_mcm_dmove</depend>  
+  <depend>mcm_dmove</depend>  
   <exec_depend>adore_if_ros_msg</exec_depend>
   <export>
   </export>

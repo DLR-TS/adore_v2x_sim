@@ -45,7 +45,7 @@ find_package(catkin REQUIRED COMPONENTS
   dsrc_v2_spatem_pdu_descriptions
   dsrc_v2_srem_pdu_descriptions
   cpm_v1_19_cpm_pdu_descriptions
-  mcm_dmove_mcm_dmove
+  mcm_dmove
   cam_v2_cam_pdu_descriptions
   cpm_v1_19_cpm_freespaceaddendum_descriptions
   cpm_v1_19_cpm_sensorinformation_descriptions
@@ -77,7 +77,7 @@ generate_messages(
   dsrc_v2_spatem_pdu_descriptions
   dsrc_v2_srem_pdu_descriptions
   cpm_v1_19_cpm_pdu_descriptions
-  mcm_dmove_mcm_dmove
+  mcm_dmove
 )
 
 catkin_package(
@@ -92,7 +92,7 @@ catkin_package(
     dsrc_v2_mapem_pdu_descriptions
     dsrc_v2_spatem_pdu_descriptions
     cpm_v1_19_cpm_pdu_descriptions
-    mcm_dmove_mcm_dmove
+    mcm_dmove
 )
 
 include_directories(

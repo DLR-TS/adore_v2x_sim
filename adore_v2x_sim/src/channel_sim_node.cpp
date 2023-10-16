@@ -59,8 +59,8 @@ int main(int argc,char **argv)
                                     );
     adore_v2x_sim::ChannelToStation<adore_v2x_sim::SimMCM,
                                      adore_v2x_sim:: SimMCMConstPtr,
-                                    mcm_dmove_mcm_dmove::MCM,
-                                    mcm_dmove_mcm_dmove::MCMConstPtr>
+                                    mcm_dmove::MCM,
+                                    mcm_dmove::MCMConstPtr>
                                     channelToStation_mcm(n,
                                         "/SIM/v2x/MCM",
                                         "/SIM/v2x/MCM",
